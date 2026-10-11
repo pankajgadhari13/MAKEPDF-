@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}MAKEPDF - Simple PDF tools{% endblock %}</title>
+    <meta name="description" content="Browse files from your device and turn JPG or PNG images into polished PDFs with MAKEPDF.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- MAKEPDF Custom Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="theme-dark">
+    <!-- Header matching screenshot -->
+    <header class="navbar-wrapper">
+        <div class="navbar-container">
+            <!-- Brand Logo + Monospace Slogan -->
+            <div class="brand-group">
+                <a href="/" class="brand-logo">
+                    <div class="brand-icon-box">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                    </div>
+                    <span class="brand-text">MAKE<span class="text-orange">PDF</span></span>
+                </a>
+                <span class="brand-sep">|</span>
+                <span class="brand-tagline-mono">Simple PDF tools</span>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="nav-links" id="navLinks">
+                <a href="/" class="nav-item">Home</a>
+                <a href="/tools" class="nav-item">PDF Tools</a>
+                <a href="#how-it-works" class="nav-item">How it works</a>
+                <a href="/pricing" class="nav-item">Pricing</a>
+                <a href="#faq" class="nav-item">FAQ</a>
+            </nav>
+
+            <!-- Actions: Sun Icon + Log in + Get started -->
+            <div class="nav-actions">
+                <button class="theme-toggle-btn" aria-label="Toggle Brightness">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+                <a href="/login" class="nav-link-login">Log in</a>
+                <a href="/register" class="btn-get-started">
+                    <span>Get started</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Minimalist Footer -->
+    <footer class="footer-wrapper">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="brand-text">MAKE<span class="text-orange">PDF</span></span>
+                <p class="footer-tagline">Simple PDF tools. Made for speed & clarity.</p>
+            </div>
+            <div class="footer-links">
+                <a href="/tools">PDF Tools</a>
+                <a href="/pricing">Pricing</a>
+                <a href="/api/health" class="text-orange font-mono">Backend Health</a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 MAKEPDF. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

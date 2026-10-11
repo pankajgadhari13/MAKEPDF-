@@ -1,0 +1,115 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny all access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        (request.auth.token.email_verified == true && request.auth.token.email == 'pankajgadhari154@gmail.com') ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidUser(data, userId) {
+      return data.userId == userId &&
+        data.userId == request.auth.uid &&
+        data.email is string && data.email.size() >= 3 && data.email.size() <= 200 &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+        (!('avatarUrl' in data) || (data.avatarUrl is string && data.avatarUrl.size() <= 1000)) &&
+        data.role in ['user', 'admin'] &&
+        data.filesProcessed is number && data.filesProcessed >= 0 &&
+        data.pdfsCreated is number && data.pdfsCreated >= 0 &&
+        data.storageUsedMb is number && data.storageUsedMb >= 0 &&
+        data.createdAt is string && data.createdAt.size() <= 50 &&
+        (!('updatedAt' in data) || (data.updatedAt is string && data.updatedAt.size() <= 50));
+    }
+
+    function isValidHistoryItem(data, userId) {
+      return data.userId == userId &&
+        data.userId == request.auth.uid &&
+        data.id is string && data.id.size() > 0 && data.id.size() <= 128 &&
+        data.filename is string && data.filename.size() > 0 && data.filename.size() <= 300 &&
+        data.tool is string && data.tool.size() > 0 && data.tool.size() <= 100 &&
+        data.date is string && data.date.size() > 0 && data.date.size() <= 100 &&
+        data.size is string && data.size.size() > 0 && data.size.size() <= 50 &&
+        data.status in ['Completed', 'Processing', 'Failed'] &&
+        data.createdAt is string && data.createdAt.size() <= 50 &&
+        (!('downloadUrl' in data) || (data.downloadUrl is string && data.downloadUrl.size() <= 2000));
+    }
+
+    // User profiles collection
+    match /users/{userId} {
+      allow get: if isValidId(userId) && (isOwner(userId) || isAdmin());
+      allow list: if isAdmin();
+
+      allow create: if isValidId(userId) &&
+        isOwner(userId) &&
+        isValidUser(incoming(), userId) &&
+        (incoming().role == 'user' || isAdmin()) &&
+        incoming().keys().hasAll(['userId', 'email', 'name', 'role', 'filesProcessed', 'pdfsCreated', 'storageUsedMb', 'createdAt']) &&
+        incoming().keys().hasOnly(['userId', 'email', 'name', 'role', 'avatarUrl', 'filesProcessed', 'pdfsCreated', 'storageUsedMb', 'createdAt', 'updatedAt']);
+
+      allow update: if isValidId(userId) &&
+        (isOwner(userId) || isAdmin()) &&
+        isValidUser(incoming(), userId) &&
+        incoming().userId == existing().userId &&
+        incoming().createdAt == existing().createdAt &&
+        (incoming().role == existing().role || isAdmin()) &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['name', 'avatarUrl', 'filesProcessed', 'pdfsCreated', 'storageUsedMb', 'updatedAt', 'role']);
+
+      allow delete: if isValidId(userId) && (isOwner(userId) || isAdmin());
+
+      // User document processing history subcollection
+      match /history/{historyId} {
+        allow get: if isValidId(userId) && isValidId(historyId) && (isOwner(userId) || isAdmin());
+        allow list: if isValidId(userId) && (isOwner(userId) || isAdmin());
+
+        allow create: if isValidId(userId) && isValidId(historyId) &&
+          (isOwner(userId) || isAdmin()) &&
+          isValidHistoryItem(incoming(), userId) &&
+          incoming().id == historyId &&
+          incoming().keys().hasAll(['id', 'userId', 'filename', 'tool', 'date', 'size', 'status', 'createdAt']) &&
+          incoming().keys().hasOnly(['id', 'userId', 'filename', 'tool', 'date', 'size', 'status', 'downloadUrl', 'createdAt']);
+
+        allow update: if isValidId(userId) && isValidId(historyId) &&
+          (isOwner(userId) || isAdmin()) &&
+          isValidHistoryItem(incoming(), userId) &&
+          incoming().id == existing().id &&
+          incoming().userId == existing().userId &&
+          incoming().diff(existing()).affectedKeys().hasOnly(['status', 'downloadUrl', 'size']);
+
+        allow delete: if isValidId(userId) && isValidId(historyId) && (isOwner(userId) || isAdmin());
+      }
+    }
+
+    // Admin reference collection
+    match /admins/{adminId} {
+      allow read, write: if isAdmin();
+    }
+  }
+}

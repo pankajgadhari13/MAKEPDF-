@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section Matching Screenshot -->
+<section class="hero-section">
+    <div class="hero-glow hero-glow-1"></div>
+    
+    <div class="hero-container">
+        <!-- Left Column: Dropzone & Main Headline -->
+        <div class="hero-content">
+            <div class="hero-kicker-mono">
+                <span class="kicker-dot"></span>
+                <span>START WITH AN IMAGE</span>
+            </div>
+
+            <h1 class="hero-title">
+                Drop your JPG<br>
+                <span class="text-orange">right here.</span>
+            </h1>
+
+            <p class="hero-subtitle">
+                Browse files from your device and turn JPG or PNG images into polished PDFs.
+            </p>
+
+            <!-- Hero Dropzone Box -->
+            <div class="hero-dropzone-box" onclick="location.href='/tools/jpg-to-pdf'">
+                <div class="drop-circle-btn">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                        <polyline points="5 12 12 5 19 12"></polyline>
+                    </svg>
+                </div>
+                <h3 class="drop-title">Drop your JPG here</h3>
+                <p class="drop-desc">or <span class="text-orange text-underline">browse files</span> from your device</p>
+                <span class="drop-meta">JPG, PNG up to 50 MB</span>
+            </div>
+        </div>
+
+        <!-- Right Column: 3D Paper Composition with Floating Pill Badges -->
+        <div class="hero-visual">
+            <div class="composition-wrapper">
+                <!-- Back Dark Card Tilted -->
+                <div class="sheet-back-card"></div>
+
+                <!-- Front White Document Sheet (The art of clarity.) -->
+                <div class="sheet-front-paper">
+                    <div class="paper-top">
+                        <span class="paper-brand">MAKEPDF</span>
+                        <span class="paper-num">01 / 06</span>
+                    </div>
+
+                    <div class="paper-headline">
+                        The art of<br>
+                        <span class="text-orange">clarity.</span>
+                        <div class="mock-lines">
+                            <div class="mock-line line-1"></div>
+                            <div class="mock-line line-2"></div>
+                            <div class="mock-line line-3"></div>
+                        </div>
+                    </div>
+
+                    <div class="paper-bottom">
+                        <span>MAKEPDF / 2026</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- Floating Badges -->
+                <div class="floating-pill-badge pill-top">
+                    <span class="badge-icon">✦</span>
+                    <span>Fast & focused</span>
+                </div>
+
+                <div class="floating-pill-badge pill-bottom">
+                    <span class="badge-icon">⚡</span>
+                    <span>Ready in seconds</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Tools Grid Section -->
+<section class="tools-section" id="tools">
+    <div class="tools-container">
+        <div class="section-header">
+            <span class="section-kicker">SUITE OVERVIEW</span>
+            <h2 class="section-title">All-in-One PDF Toolset</h2>
+            <p class="section-subtitle">Select a tool below to process your files securely with instant output.</p>
+        </div>
+
+        <div class="tools-grid">
+            {% for tool in tools %}
+            <a href="{{ tool.url }}" class="tool-card">
+                <div class="tool-icon-wrapper">
+                    <span class="tool-badge-number">{{ '%02d' % loop.index }}</span>
+                    <div class="tool-icon">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                            <polyline points="21 15 16 10 5 21"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="tool-info">
+                    <h3 class="tool-title">{{ tool.title }}</h3>
+                    <p class="tool-desc">{{ tool.desc }}</p>
+                </div>
+                <div class="tool-action">
+                    <span class="tool-link-text">Launch Tool</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

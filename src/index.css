@@ -1,0 +1,530 @@
+@import "tailwindcss";
+
+/* CSS Variables for persistent theme switching between high-contrast orange/black and clean light mode */
+:root {
+  /* Default: High-contrast Orange & Black Theme */
+  --bg-app: #08080a;
+  --bg-card: #12121a;
+  --bg-card-hover: #161622;
+  --bg-card-secondary: #171722;
+  --bg-elevated: #1a1a26;
+  --bg-input: #14141e;
+  --text-main: #f3f4f6;
+  --text-heading: #ffffff;
+  --text-muted: #9ca3af;
+  --text-dim: #6b7280;
+  --border-app: #232332;
+  --border-subtle: #1c1c28;
+  --border-input: #28283c;
+  --accent-orange: #ff5722;
+  --accent-orange-bright: #ff6b00;
+  --accent-orange-glow: rgba(255, 87, 34, 0.45);
+  --header-bg: rgba(8, 8, 10, 0.95);
+  --footer-bg: #0a0a0e;
+  --dropzone-bg: #12121a;
+  --badge-bg: rgba(255, 107, 0, 0.12);
+  --badge-border: rgba(255, 107, 0, 0.3);
+  --badge-text: #ff851a;
+}
+
+[data-theme="light"],
+.light-mode {
+  /* Clean Light Mode Theme - Pure crisp white backgrounds and readable high contrast */
+  --bg-app: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-card-secondary: #ffffff;
+  --bg-elevated: #ffffff;
+  --bg-input: #ffffff;
+  --text-main: #0f172a;
+  --text-heading: #020617;
+  --text-muted: #334155;
+  --text-dim: #64748b;
+  --border-app: #e2e8f0;
+  --border-subtle: #f1f5f9;
+  --border-input: #cbd5e1;
+  --accent-orange: #ff5722;
+  --accent-orange-bright: #ff6b00;
+  --accent-orange-glow: rgba(255, 87, 34, 0.2);
+  --header-bg: rgba(255, 255, 255, 0.96);
+  --footer-bg: #ffffff;
+  --dropzone-bg: #ffffff;
+  --badge-bg: rgba(255, 87, 34, 0.08);
+  --badge-border: rgba(255, 87, 34, 0.25);
+  --badge-text: #ea580c;
+}
+
+@layer base {
+  body {
+    background-color: var(--bg-app);
+    color: var(--text-main);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Custom glowing effects and futuristic orange-black accents */
+.glow-orange {
+  box-shadow: 0 0 25px -5px rgba(255, 107, 0, 0.35);
+}
+
+.glow-orange-sm {
+  box-shadow: 0 0 15px -3px rgba(255, 107, 0, 0.25);
+}
+
+.glow-border {
+  border-color: rgba(255, 107, 0, 0.4);
+}
+
+.orange-gradient-text {
+  background: linear-gradient(135deg, #ffffff 30%, #ff851a 80%, #ff5500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.orange-flame-text {
+  background: linear-gradient(135deg, #ff8c00 0%, #ff5500 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0f14;
+}
+::-webkit-scrollbar-thumb {
+  background: #272733;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6b00;
+}
+
+/* Tool card simple hover - clean border and background shift as originally built */
+.tool-card {
+  position: relative;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.tool-card:hover {
+  border-color: #ff5722 !important;
+}
+
+/* ========================================================
+   LIGHT MODE OVERRIDES USING CSS VARIABLES
+   ======================================================== */
+[data-theme="light"],
+.light-mode {
+  color-scheme: light;
+}
+
+[data-theme="light"] body,
+.light-mode body {
+  background-color: var(--bg-app) !important;
+  color: var(--text-main) !important;
+}
+
+[data-theme="light"] header,
+.light-mode header {
+  background-color: var(--header-bg) !important;
+  border-color: var(--border-app) !important;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] footer,
+.light-mode footer {
+  background-color: var(--footer-bg) !important;
+  border-color: var(--border-app) !important;
+}
+
+/* Light mode tool cards */
+[data-theme="light"] .tool-card,
+.light-mode .tool-card {
+  background-color: var(--bg-card) !important;
+  border-color: var(--border-app) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .tool-card:hover,
+.light-mode .tool-card:hover {
+  background-color: #ffffff !important;
+  border-color: var(--accent-orange) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .tool-card h3,
+.light-mode .tool-card h3 {
+  color: var(--text-heading) !important;
+}
+
+[data-theme="light"] .tool-card p,
+.light-mode .tool-card p {
+  color: var(--text-muted) !important;
+}
+
+/* Light mode How It Works 3 step cards - Pure crisp white background */
+[data-theme="light"] section#how-it-works > div > div:nth-of-type(2) > div,
+.light-mode section#how-it-works > div > div:nth-of-type(2) > div {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.05), 0 1px 3px 0 rgba(0, 0, 0, 0.03) !important;
+}
+
+[data-theme="light"] section#how-it-works > div > div:nth-of-type(2) > div:hover,
+.light-mode section#how-it-works > div > div:nth-of-type(2) > div:hover {
+  background-color: #ffffff !important;
+  border-color: #ff5722 !important;
+  box-shadow: 0 8px 24px -2px rgba(255, 87, 34, 0.12), 0 2px 6px -1px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] section#how-it-works > div > div:nth-of-type(2) > div h3,
+.light-mode section#how-it-works > div > div:nth-of-type(2) > div h3 {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] section#how-it-works > div > div:nth-of-type(2) > div p,
+.light-mode section#how-it-works > div > div:nth-of-type(2) > div p {
+  color: #64748b !important;
+}
+
+[data-theme="light"] section#how-it-works > div > div:nth-of-type(2) > div span.font-mono,
+.light-mode section#how-it-works > div > div:nth-of-type(2) > div span.font-mono {
+  color: #94a3b8 !important;
+}
+
+/* Surface backgrounds in light mode - Make all boxes, cards, and sections pure white */
+[data-theme="light"] .bg-\[\#08080a\],
+[data-theme="light"] .bg-\[\#0a0a0e\],
+[data-theme="light"] .bg-\[\#0a0a0d\],
+[data-theme="light"] .bg-\[\#0a0a0f\],
+[data-theme="light"] .bg-\[\#08080b\],
+[data-theme="light"] .bg-\[\#0c0c11\],
+[data-theme="light"] .bg-\[\#07070a\],
+[data-theme="light"] .bg-\[\#0d0d12\],
+[data-theme="light"] .bg-\[\#08080a\]\/95,
+[data-theme="light"] .bg-\[\#0a0a0f\]\/95,
+[data-theme="light"] .bg-\[\#0b0b0f\],
+[data-theme="light"] section#pdf-tools-directory,
+.light-mode .bg-\[\#08080a\],
+.light-mode .bg-\[\#0a0a0e\],
+.light-mode .bg-\[\#0a0a0d\],
+.light-mode .bg-\[\#0a0a0f\],
+.light-mode .bg-\[\#08080b\],
+.light-mode .bg-\[\#0c0c11\],
+.light-mode .bg-\[\#07070a\],
+.light-mode .bg-\[\#0d0d12\],
+.light-mode .bg-\[\#08080a\]\/95,
+.light-mode .bg-\[\#0a0a0f\]\/95,
+.light-mode .bg-\[\#0b0b0f\],
+.light-mode section#pdf-tools-directory {
+  background-color: var(--bg-app) !important;
+}
+
+/* Category filter tabs in light mode */
+[data-theme="light"] .bg-\[\#151520\],
+.light-mode .bg-\[\#151520\] {
+  background-color: #f1f5f9 !important;
+  color: #334155 !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] .bg-\[\#151520\]:hover,
+.light-mode .bg-\[\#151520\]:hover {
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .bg-\[\#12121a\],
+[data-theme="light"] .bg-\[\#14141e\],
+[data-theme="light"] .bg-\[\#14141d\],
+[data-theme="light"] .bg-\[\#14141f\],
+[data-theme="light"] .bg-\[\#13131c\],
+[data-theme="light"] .bg-\[\#13131f\],
+[data-theme="light"] .bg-\[\#101018\],
+[data-theme="light"] .bg-\[\#101016\],
+[data-theme="light"] .bg-\[\#111119\],
+[data-theme="light"] .bg-\[\#151520\],
+[data-theme="light"] .bg-\[\#151522\],
+[data-theme="light"] .bg-\[\#0f0f14\],
+[data-theme="light"] .bg-\[\#0f0f15\],
+[data-theme="light"] .bg-\[\#0f0f16\],
+[data-theme="light"] .bg-\[\#121218\],
+[data-theme="light"] .bg-\[\#12121a\]\/80,
+[data-theme="light"] section#how-it-works > div > div:nth-of-type(2) > div,
+.light-mode section#how-it-works > div > div:nth-of-type(2) > div,
+.light-mode .bg-\[\#12121a\],
+.light-mode .bg-\[\#14141e\],
+.light-mode .bg-\[\#14141d\],
+.light-mode .bg-\[\#14141f\],
+.light-mode .bg-\[\#13131c\],
+.light-mode .bg-\[\#13131f\],
+.light-mode .bg-\[\#101018\],
+.light-mode .bg-\[\#101016\],
+.light-mode .bg-\[\#111119\],
+.light-mode .bg-\[\#151520\],
+.light-mode .bg-\[\#151522\],
+.light-mode .bg-\[\#0f0f14\],
+.light-mode .bg-\[\#0f0f15\],
+.light-mode .bg-\[\#0f0f16\],
+.light-mode .bg-\[\#121218\],
+.light-mode .bg-\[\#12121a\]\/80 {
+  background-color: #ffffff !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .bg-\[\#161622\],
+[data-theme="light"] .bg-\[\#171722\],
+[data-theme="light"] .bg-\[\#181824\],
+[data-theme="light"] .bg-\[\#181825\],
+[data-theme="light"] .bg-\[\#191924\],
+[data-theme="light"] .bg-\[\#1a1a24\],
+[data-theme="light"] .bg-\[\#1a1a26\],
+[data-theme="light"] .bg-\[\#1a1a28\],
+[data-theme="light"] .bg-\[\#1b1b26\],
+[data-theme="light"] .bg-\[\#1b1b28\],
+[data-theme="light"] .bg-\[\#1c1c27\],
+[data-theme="light"] .bg-\[\#1c1c28\],
+[data-theme="light"] .bg-\[\#1f1f2b\],
+[data-theme="light"] .bg-\[\#1f1f2d\],
+[data-theme="light"] .bg-\[\#1f1f2e\],
+[data-theme="light"] .bg-\[\#1f1f30\],
+[data-theme="light"] .bg-\[\#1e1e2c\],
+[data-theme="light"] .bg-\[\#20202e\],
+[data-theme="light"] .bg-\[\#222232\],
+[data-theme="light"] .bg-\[\#252535\],
+[data-theme="light"] .bg-\[\#171724\],
+[data-theme="light"] div#root > div > main > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1),
+[data-theme="light"] div#root > div > main > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1),
+[data-theme="light"] div#root > div > main > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2),
+.light-mode .bg-\[\#161622\],
+.light-mode .bg-\[\#171722\],
+.light-mode .bg-\[\#181824\],
+.light-mode .bg-\[\#181825\],
+.light-mode .bg-\[\#191924\],
+.light-mode .bg-\[\#1a1a24\],
+.light-mode .bg-\[\#1a1a26\],
+.light-mode .bg-\[\#1a1a28\],
+.light-mode .bg-\[\#1b1b26\],
+.light-mode .bg-\[\#1b1b28\],
+.light-mode .bg-\[\#1c1c27\],
+.light-mode .bg-\[\#1c1c28\],
+.light-mode .bg-\[\#1f1f2b\],
+.light-mode .bg-\[\#1f1f2d\],
+.light-mode .bg-\[\#1f1f2e\],
+.light-mode .bg-\[\#1f1f30\],
+.light-mode .bg-\[\#1e1e2c\],
+.light-mode .bg-\[\#20202e\],
+.light-mode .bg-\[\#222232\],
+.light-mode .bg-\[\#252535\],
+.light-mode .bg-\[\#171724\],
+.light-mode div#root > div > main > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1),
+.light-mode div#root > div > main > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1),
+.light-mode div#root > div > main > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) {
+  background-color: #ffffff !important;
+  background-image: none !important;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Gradients that were dark -> clean white */
+[data-theme="light"] .bg-gradient-to-r,
+[data-theme="light"] [class*="from-\[\#141420\]"],
+[data-theme="light"] [class*="from-\[\#111119\]"],
+[data-theme="light"] [class*="to-\[\#12121a\]"],
+[data-theme="light"] .bg-gradient-to-br.from-\[\#1a1a28\],
+.light-mode .bg-gradient-to-r,
+.light-mode [class*="from-\[\#141420\]"],
+.light-mode [class*="from-\[\#111119\]"],
+.light-mode [class*="to-\[\#12121a\]"],
+.light-mode .bg-gradient-to-br.from-\[\#1a1a28\] {
+  background-image: none !important;
+  background-color: #ffffff !important;
+}
+
+/* Border overrides in light mode - clean subtle borders */
+[data-theme="light"] .border-\[\#232332\],
+[data-theme="light"] .border-\[\#17171e\],
+[data-theme="light"] .border-\[\#171720\],
+[data-theme="light"] .border-\[\#181822\],
+[data-theme="light"] .border-\[\#1b1b26\],
+[data-theme="light"] .border-\[\#1c1c28\],
+[data-theme="light"] .border-\[\#1c1c2a\],
+[data-theme="light"] .border-\[\#1d1d28\],
+[data-theme="light"] .border-\[\#1e1e2b\],
+[data-theme="light"] .border-\[\#1e1e2c\],
+[data-theme="light"] .border-\[\#1e1e2d\],
+[data-theme="light"] .border-\[\#1f1f2b\],
+[data-theme="light"] .border-\[\#1f1f2c\],
+[data-theme="light"] .border-\[\#1f1f2e\],
+[data-theme="light"] .border-\[\#20202d\],
+[data-theme="light"] .border-\[\#20202e\],
+[data-theme="light"] .border-\[\#222230\],
+[data-theme="light"] .border-\[\#222232\],
+[data-theme="light"] .border-\[\#232334\],
+[data-theme="light"] .border-\[\#242434\],
+[data-theme="light"] .border-\[\#242436\],
+[data-theme="light"] .border-\[\#262635\],
+[data-theme="light"] .border-\[\#262638\],
+[data-theme="light"] .border-\[\#272738\],
+[data-theme="light"] .border-\[\#282838\],
+[data-theme="light"] .border-\[\#28283a\],
+[data-theme="light"] .border-\[\#28283c\],
+[data-theme="light"] .border-\[\#29293a\],
+[data-theme="light"] .border-\[\#29293b\],
+[data-theme="light"] .border-\[\#2a2a3d\],
+[data-theme="light"] .border-\[\#2a2a3e\],
+[data-theme="light"] .border-\[\#2b2b3d\],
+[data-theme="light"] .border-\[\#2c2c3d\],
+[data-theme="light"] .border-\[\#2c2c40\],
+[data-theme="light"] .border-\[\#2d2d3f\],
+[data-theme="light"] .border-\[\#2e2e3f\],
+[data-theme="light"] .border-\[\#2f2f40\],
+.light-mode .border-\[\#232332\],
+.light-mode .border-\[\#17171e\],
+.light-mode .border-\[\#171720\],
+.light-mode .border-\[\#181822\],
+.light-mode .border-\[\#1b1b26\],
+.light-mode .border-\[\#1c1c28\],
+.light-mode .border-\[\#1c1c2a\],
+.light-mode .border-\[\#1d1d28\],
+.light-mode .border-\[\#1e1e2b\],
+.light-mode .border-\[\#1e1e2c\],
+.light-mode .border-\[\#1e1e2d\],
+.light-mode .border-\[\#1f1f2b\],
+.light-mode .border-\[\#1f1f2c\],
+.light-mode .border-\[\#1f1f2e\],
+.light-mode .border-\[\#20202d\],
+.light-mode .border-\[\#20202e\],
+.light-mode .border-\[\#222230\],
+.light-mode .border-\[\#222232\],
+.light-mode .border-\[\#232334\],
+.light-mode .border-\[\#242434\],
+.light-mode .border-\[\#242436\],
+.light-mode .border-\[\#262635\],
+.light-mode .border-\[\#262638\],
+.light-mode .border-\[\#272738\],
+.light-mode .border-\[\#282838\],
+.light-mode .border-\[\#28283a\],
+.light-mode .border-\[\#28283c\],
+.light-mode .border-\[\#29293a\],
+.light-mode .border-\[\#29293b\],
+.light-mode .border-\[\#2a2a3d\],
+.light-mode .border-\[\#2a2a3e\],
+.light-mode .border-\[\#2b2b3d\],
+.light-mode .border-\[\#2c2c3d\],
+.light-mode .border-\[\#2c2c40\],
+.light-mode .border-\[\#2d2d3f\],
+.light-mode .border-\[\#2e2e3f\],
+.light-mode .border-\[\#2f2f40\] {
+  border-color: #e2e8f0 !important;
+}
+
+/* Typography in light mode */
+[data-theme="light"] .text-white,
+.light-mode .text-white {
+  color: var(--text-heading) !important;
+}
+
+[data-theme="light"] .text-neutral-200,
+[data-theme="light"] .text-neutral-300,
+.light-mode .text-neutral-200,
+.light-mode .text-neutral-300 {
+  color: var(--text-main) !important;
+}
+
+[data-theme="light"] .text-neutral-400,
+.light-mode .text-neutral-400 {
+  color: var(--text-muted) !important;
+}
+
+[data-theme="light"] .text-neutral-500,
+.light-mode .text-neutral-500 {
+  color: var(--text-dim) !important;
+}
+
+/* Preserve bright orange buttons and white text inside them */
+[data-theme="light"] button[class*="from-\[\#ff5722\]"],
+[data-theme="light"] button[class*="bg-\[\#ff5722\]"],
+[data-theme="light"] .bg-\[\#ff5722\],
+.light-mode button[class*="from-\[\#ff5722\]"],
+.light-mode button[class*="bg-\[\#ff5722\]"],
+.light-mode .bg-\[\#ff5722\] {
+  background-color: var(--accent-orange) !important;
+  color: #ffffff !important;
+}
+
+[data-theme="light"] button[class*="from-\[\#ff5722\]"] *,
+[data-theme="light"] button[class*="bg-\[\#ff5722\]"] *,
+.light-mode button[class*="from-\[\#ff5722\]"] *,
+.light-mode button[class*="bg-\[\#ff5722\]"] * {
+  color: #ffffff !important;
+}
+
+/* Inputs & Form controls in light mode */
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select,
+.light-mode input,
+.light-mode textarea,
+.light-mode select {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border-color: #cbd5e1 !important;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder,
+.light-mode input::placeholder,
+.light-mode textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Scrollbars in light mode */
+[data-theme="light"] ::-webkit-scrollbar-track,
+.light-mode ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb,
+.light-mode ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover,
+.light-mode ::-webkit-scrollbar-thumb:hover {
+  background: #ff5722;
+}
+
+/* Mobile Bottom Navigation in Light Mode */
+[data-theme="light"] .mobile-bottom-nav,
+.light-mode .mobile-bottom-nav {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-top-color: #e2e8f0 !important;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .mobile-bottom-nav .nav-inactive,
+.light-mode .mobile-bottom-nav .nav-inactive {
+  color: #64748b !important;
+}
+
+[data-theme="light"] .mobile-bottom-nav .nav-inactive:hover,
+.light-mode .mobile-bottom-nav .nav-inactive:hover {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .mobile-bottom-nav .nav-active,
+.light-mode .mobile-bottom-nav .nav-active {
+  color: #ea580c !important;
+}
+
+
+
