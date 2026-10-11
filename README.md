@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MAKEPDF — Powerful PDF Tools. Made Simple.
 
 > Modern, futuristic **Orange and Black** PDF utility web application built with Python 3.11+, Flask, PostgreSQL, and Jinja2 templates.
@@ -86,3 +87,7 @@ pytest tests/
 - Open `http://127.0.0.1:5000/` in your browser to verify the Orange & Black hero page.
 - Test `http://127.0.0.1:5000/tools` to see all utility cards.
 - Visit `http://127.0.0.1:5000/api/health` to confirm the backend health JSON response.
+=======
+# MAKEPDF-
+**MAKEPDF** is a fast, secure, and modern PDF utility suite that lets users merge, split, compress, convert, watermark, protect, and inspect PDF files. It also supports JPG and Word document conversions, with a focus on a smooth, user-friendly experience and client-side file processing wherever supported.
+>>>>>>> f8dfd4ae82bb8b47b202cc36b33a0a87e430b50a
